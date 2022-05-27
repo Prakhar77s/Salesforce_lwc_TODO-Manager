@@ -25,7 +25,22 @@
                  </lightning-button-icon>
              </lightning-layout-item>
          </lightning-layout>
-     </lightning-layout-item> 
+     </lightning-layout-item>
+
+    <lightning-layout-item size="12">
+        <div>UPCOMING</div>
+        <template for:each={upcomingTasks} for:item="todo">
+            <div class="item-class" key={todo.todoId}>
+                <c-todo-item key={todo.todoId} todo-id={todo.todoId} todo-name={todo.todoName}></c-todo-item>
+            </div>
+        </template>
+
+        <div>Completed</div>
+        <template for:each={completedTasks} for:item="todo">
+            <c-todo-item key={todo.todoId} todo-id={todo.todoId} todo-name={todo.todoName} done></c-todo-item>
+        </template>
+
+    </lightning-layout-item>
 
     </lightning-layout>
 </template>

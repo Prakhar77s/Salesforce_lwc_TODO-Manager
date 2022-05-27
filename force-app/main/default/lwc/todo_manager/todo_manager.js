@@ -1,8 +1,11 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 export default class Todo_manager extends LightningElement {
     time="7pm";
     greeting="good evening"
+
+      //reactive list property to hold todo items
+  @track todos = [];
 
     connectedCallback() {
         //get current time
@@ -52,5 +55,31 @@ export default class Todo_manager extends LightningElement {
           this.greeting = "Good Evening";
         }
       }
+
+      addTodoHandler() {
+        //get input box html element
+        const inputBox = this.template.querySelector("lightning-input");
+
+        const todo = {
+          todoId: this.todos.length,
+          todoName: inputBox.value,
+          done: false,
+          todoDate: new Date()
+        }
+        this.todos.push(todo);
+        inputBox.value="";
+      }
+
+      // get property to return upcoming/unfinished todos
+      get upcomingTasks(){
+        return this.todos && this.todos.length ? this.todos.filter(todo => !todo.done) : []
+      }
+
+      // get property to return completed todos
+  get completedTasks() {
+    return this.todos && this.todos.length
+      ? this.todos.filter(todo => todo.done)
+      : [];
+  }
 
 }   
